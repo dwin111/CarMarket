@@ -1,0 +1,15 @@
+﻿@using CarMarket.Domain.Models_Entity_;
+@model IEnumerable<Car>
+@{
+}
+
+@{
+    foreach (var car in Model)
+    {
+        <h1>@car.Name</h1>
+        <P>@car.Model</P>
+        <P>@car.Description</P>
+        <P>@car.Price.ToString("c")</P>
+        <P>@car.DateCreate.ToString("d")</P>
+    }
+}

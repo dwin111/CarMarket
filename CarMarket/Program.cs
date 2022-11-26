@@ -1,8 +1,11 @@
 using System;
 using CarMarket.DAL;
+using CarMarket.DAL.Interfaces;
+using CarMarket.DAL.Repositories;
+using CarMarket.Domain.Response;
+using CarMarket.Service.Implementions;
+using CarMarket.Service.Interface;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<ICarRepository, CarRepository>();
+builder.Services.AddScoped<ICarService, CarService>();
+
+
 
 var app = builder.Build();
 

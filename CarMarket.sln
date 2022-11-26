@@ -7,11 +7,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarMarket", "CarMarket\CarM
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{BE72FB54-EB55-45BE-AD71-C24BF90BCEA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarMarket.Domain", "CarMarket.Domain\CarMarket.Domain.csproj", "{DD585CB4-CED1-4684-B1C0-B533F56B55CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarMarket.Domain", "CarMarket.Domain\CarMarket.Domain.csproj", "{DD585CB4-CED1-4684-B1C0-B533F56B55CC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{5624AC95-7333-439A-B7D1-CF09C20CF766}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarMarket.DAL", "CarMarket.DAL\CarMarket.DAL.csproj", "{D2EB8232-8DE9-428F-A361-BFAC58116C34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarMarket.DAL", "CarMarket.DAL\CarMarket.DAL.csproj", "{D2EB8232-8DE9-428F-A361-BFAC58116C34}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{A71C0BE6-F4B0-419A-8490-8A0932F0F32D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarMarket.Service", "CarMarket.Service\CarMarket.Service.csproj", "{83383E57-3413-453F-A80E-DA6779A8B4A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +35,10 @@ Global
 		{D2EB8232-8DE9-428F-A361-BFAC58116C34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2EB8232-8DE9-428F-A361-BFAC58116C34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2EB8232-8DE9-428F-A361-BFAC58116C34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83383E57-3413-453F-A80E-DA6779A8B4A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83383E57-3413-453F-A80E-DA6779A8B4A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83383E57-3413-453F-A80E-DA6779A8B4A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83383E57-3413-453F-A80E-DA6779A8B4A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,6 +46,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{DD585CB4-CED1-4684-B1C0-B533F56B55CC} = {BE72FB54-EB55-45BE-AD71-C24BF90BCEA2}
 		{D2EB8232-8DE9-428F-A361-BFAC58116C34} = {5624AC95-7333-439A-B7D1-CF09C20CF766}
+		{83383E57-3413-453F-A80E-DA6779A8B4A5} = {A71C0BE6-F4B0-419A-8490-8A0932F0F32D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4A7DFBB6-FB45-4B66-8DC3-F5A078271164}
