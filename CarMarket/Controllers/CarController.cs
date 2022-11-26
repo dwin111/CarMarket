@@ -54,6 +54,7 @@ namespace CarMarket.Controllers
             }
             return RedirectToAction("Error");
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Save(int id)
         {
@@ -69,6 +70,7 @@ namespace CarMarket.Controllers
             }
             return RedirectToAction("Error");
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Save(CarViewModel model)
         {
@@ -80,9 +82,10 @@ namespace CarMarket.Controllers
                 }
                 else
                 {
-
+                    await _carService.Edit(model.Id, model);
                 }
             }
+            return RedirectToAction("GetCars");
         }
     }
 }
