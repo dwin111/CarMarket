@@ -11,5 +11,11 @@ namespace CarMarket.DAL
         }
 
         public DbSet<Car> Car { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            
+        }
     }
 }

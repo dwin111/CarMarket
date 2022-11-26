@@ -7,9 +7,8 @@ namespace CarMarket.DAL.Interfaces
     {
         Task<bool> Create(T model);
 
-        Task<T> Get(int id);
 
-        Task<List<Car>> Select();
+        IQueryable<T> GetAll();
 
         Task<bool> Delete(T model);
         Task<T> Update(T car);

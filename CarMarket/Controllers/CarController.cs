@@ -26,7 +26,7 @@ namespace CarMarket.Controllers
             var respons = await _carService.GetCars();
             if(respons.StatusCode == Domain.Enum.StatusCode.OK)
             {
-                return View(respons.Data);
+                return View(respons.Data.ToList());
             }
             return RedirectToAction("Error");
            
@@ -74,18 +74,32 @@ namespace CarMarket.Controllers
         [HttpPost]
         public async Task<IActionResult> Save(CarViewModel model)
         {
+            ModelState.Remove("DateCreate");
             if (ModelState.IsValid)
             {
                 if(model.Id == 0)
                 {
-                    await _carService.CreateCar(model);
+                    byte[] imgData;
+                    using(var BinaryReader = new BinaryReader(model.Avatar.OpenReadStream()))
+                    {
+                        imgData = BinaryReader.ReadBytes((int)model.Avatar.Length);
+                    }
+                    await _carService.CreateCar(model, imgData);
                 }
                 else
                 {
                     await _carService.Edit(model.Id, model);
                 }
+                return RedirectToAction("GetCars");
             }
-            return RedirectToAction("GetCars");
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult GetTypes()
+        {
+            var types = _carService.GetTypes();
+            return Json(types.Data);
         }
     }
 }
