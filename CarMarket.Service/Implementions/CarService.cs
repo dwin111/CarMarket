@@ -106,6 +106,38 @@ namespace CarMarket.Service.Implementions
         }
 
 
+        public async Task<IBaseResponse<Car>> Edit(int id, CarViewModel carViewModel)
+        {
+            try
+            {
+                var car = await _carRepository.Get(id);
+                var baseResponce = CheckForNull<Car, Car>(car);
+                if (baseResponce != null)
+                {
+                    return baseResponce;
+                }
+                else
+                {
+                    car.Description   = carViewModel.Description;
+                    car.DateCreate = carViewModel.DateCreate;
+                    car.Speed = carViewModel.Speed;
+                    car.Model = carViewModel.Model;
+                    car.Price = carViewModel.Price;
+                    car.Name = carViewModel.Name;
+
+                    await _carRepository.Update(car);
+
+                    return baseResponce;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Error<Car>("[Edit]", ex);
+            }
+        }
+
+
+
         private BaseResponse<T> Error<T>(string nameMethod,Exception ex)
         {
             return new BaseResponse<T>()
@@ -140,6 +172,7 @@ namespace CarMarket.Service.Implementions
             }
             return baseResponse;
         }
+
 
     }
 }

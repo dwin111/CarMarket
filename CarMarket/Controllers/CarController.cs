@@ -1,6 +1,10 @@
 ﻿using CarMarket.DAL;
 using CarMarket.DAL.Interfaces;
+using CarMarket.Domain.Models_Entity_;
+using CarMarket.Domain.Response;
+using CarMarket.Domain.ViewModels.Car;
 using CarMarket.Service.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -26,6 +30,59 @@ namespace CarMarket.Controllers
             }
             return RedirectToAction("Error");
            
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetCar(int id)
+        {
+            var respons = await _carService.GetCar(id);
+
+            if (respons.StatusCode == Domain.Enum.StatusCode.OK)
+            {
+                return View(respons.Data);
+            }
+            return RedirectToAction("Error");
+        }
+        [Authorize(Roles = "Admin")]
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var respons = await _carService.DeleteCar(id);
+
+            if (respons.StatusCode == Domain.Enum.StatusCode.OK)
+            {
+                return View(respons.Data);
+            }
+            return RedirectToAction("Error");
+        }
+        [HttpGet]
+        public async Task<IActionResult> Save(int id)
+        {
+            if(id == 0)
+            {
+                return View();
+            }
+            var respons = await _carService.GetCar(id);
+
+            if (respons.StatusCode == Domain.Enum.StatusCode.OK)
+            {
+                return View(respons.Data);
+            }
+            return RedirectToAction("Error");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Save(CarViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if(model.Id == 0)
+                {
+                    await _carService.CreateCar(model);
+                }
+                else
+                {
+
+                }
+            }
         }
     }
 }

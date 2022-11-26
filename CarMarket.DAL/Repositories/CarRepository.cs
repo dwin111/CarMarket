@@ -56,5 +56,12 @@ namespace CarMarket.DAL.Repositories
         {
             return await _db.Car.ToListAsync();
         }
+
+        public async Task<Car> Update(Car car)
+        {
+            _db.Car.Update(car);
+            await _db.SaveChangesAsync();
+            return car;
+        }
     }
 }
