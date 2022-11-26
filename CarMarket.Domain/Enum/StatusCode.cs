@@ -2,8 +2,11 @@
 namespace CarMarket.Domain.Enum
 {
     public enum StatusCode
-    {   //Car
-        CarNotFound = 0,
+    {   
+        
+        Null = 0,
+        //Car
+        CarNotFound = 1,
 
 
         OK = 200,

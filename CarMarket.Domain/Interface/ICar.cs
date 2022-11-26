@@ -1,13 +1,8 @@
-﻿using System;
-using CarMarket.Domain.Enum;
-using CarMarket.Domain.Interface;
-
-namespace CarMarket.Domain.Models_Entity_
+﻿
+namespace CarMarket.Domain.Interface
 {
-    public class Car : ICar
+    public interface ICar
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -19,8 +14,5 @@ namespace CarMarket.Domain.Models_Entity_
         public decimal Price { get; set; }
 
         public DateTime DateCreate { get; set; }
-
-        public TypeCar TypeCar { get; set; } 
     }
-
 }

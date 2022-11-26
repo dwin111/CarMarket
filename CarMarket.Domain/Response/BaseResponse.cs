@@ -13,7 +13,7 @@ namespace CarMarket.Domain.Response
     }
     public interface IBaseResponse<T>
     {
-        StatusCode StatusCode { get; }
-        T Data { get; }
+        StatusCode StatusCode { get; set; }
+        T Data { get; set; }
     }
 }

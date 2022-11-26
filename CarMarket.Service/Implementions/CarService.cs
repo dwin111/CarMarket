@@ -4,8 +4,9 @@ using CarMarket.Domain.Enum;
 using CarMarket.Domain.Models_Entity_;
 using CarMarket.Domain.Response;
 using CarMarket.Service.Interface;
-using System.Runtime.CompilerServices;
+using CarMarket.Domain.ViewModels.Car;
 using System.Xml.Linq;
+using System.Runtime.InteropServices;
 
 namespace CarMarket.Service.Implementions
 {
@@ -20,7 +21,6 @@ namespace CarMarket.Service.Implementions
 
         public async Task<IBaseResponse<IEnumerable<Car>>> GetCars()
         {
-            var baseResponse = new BaseResponse<IEnumerable<Car>>();
             try
             {
                 var cars = await _carRepository.Select();
@@ -28,17 +28,12 @@ namespace CarMarket.Service.Implementions
             }
             catch(Exception ex) 
             {
-                return new BaseResponse<IEnumerable<Car>>()
-                {
-                    Description = $"[GetCars] : {ex.Message}",
-                    StatusCode = StatusCode.IntrenalServerError
-                };
+                return Error<IEnumerable<Car>>("[GetCars]", ex);
             }
         }
 
         public async Task<IBaseResponse<Car>> GetCar(int id)
-        {
-            
+        {         
             try
             {
                 var car = await _carRepository.Get(id);
@@ -46,17 +41,12 @@ namespace CarMarket.Service.Implementions
             }
             catch(Exception ex)
             {
-                return new BaseResponse<Car>()
-                {
-                    Description = $"[GetCar] : {ex.Message}",
-                    StatusCode = StatusCode.IntrenalServerError
-                };
+                return Error<Car>("[GetCar]", ex);
             }
         }
 
         public async Task<IBaseResponse<Car>> GetCarByName(string name)
         {
-            var baseResponse = new BaseResponse<Car>();
             try
             {
                 var car = await _carRepository.GetByName(name);
@@ -64,26 +54,90 @@ namespace CarMarket.Service.Implementions
             }
             catch (Exception ex)
             {
-                return new BaseResponse<Car>()
+                return Error<Car>("[GetCarByName]",ex);
+            }
+        }
+        public async Task<IBaseResponse<bool>> DeleteCar(int id)
+        {
+            try
+            {
+                var car = await _carRepository.Get(id);
+                var baseResponce = CheckForNull<bool,Car>(car);
+                if(baseResponce != null) 
                 {
-                    Description = $"[GetCar] : {ex.Message}",
-                    StatusCode = StatusCode.IntrenalServerError
-                };
+                    return baseResponce;
+                }
+                else
+                {
+                    await _carRepository.Delete(car);
+                    baseResponce.Data = true;
+                    return baseResponce;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Error<bool>("[DeleteCar]", ex);
             }
         }
 
-
-       private IBaseResponse<T> DataVerification<T>(T data)
+        public async Task<IBaseResponse<CarViewModel>> CreateCar(CarViewModel carViewModel)
         {
-            var baseResponse = new BaseResponse<T>();
+            var baseResponse = new BaseResponse<CarViewModel>();
+            try
+            {
+                var car = new Car()
+                {
+                    Description = carViewModel.Description,
+                    DateCreate = DateTime.Now,
+                    Speed = carViewModel.Speed,
+                    Model = carViewModel.Model,
+                    Price = carViewModel.Price,
+                    Name = carViewModel.Name,
+                    TypeCar =(TypeCar)int.Parse(carViewModel.TypeCar),
+                };
+
+                await _carRepository.Create(car);
+            }
+            catch(Exception ex)
+            {
+                return Error<CarViewModel>("[CreateCar]", ex);
+            }
+            return baseResponse;
+        }
+
+
+        private BaseResponse<T> Error<T>(string nameMethod,Exception ex)
+        {
+            return new BaseResponse<T>()
+            {
+                Description = $"{nameMethod} : {ex.Message}",
+                StatusCode = StatusCode.IntrenalServerError
+            };
+        }
+
+        private IBaseResponse<T> DataVerification<T>(T data)
+        {
+
+            var baseResponse = CheckForNull<T,T>(data);
+            if (baseResponse.StatusCode == StatusCode.Null)
+            {
+                baseResponse.Data = data;
+                baseResponse.StatusCode = StatusCode.OK;
+            }
+            return baseResponse;
+        }
+        private IBaseResponse<T> CheckForNull<T,D>(D data)
+        {
+            var baseResponse = new BaseResponse<T>()
+            {
+                StatusCode = StatusCode.Null
+            };
             if (data == null)
             {
                 baseResponse.Description = "Car not found";
                 baseResponse.StatusCode = StatusCode.CarNotFound;
-                return baseResponse;
+             
             }
-            baseResponse.Data = data;
-            baseResponse.StatusCode = StatusCode.OK;
             return baseResponse;
         }
 
